@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import './index.css';
 
 function Tweet({tweet}){
 return(
     <div className="tweet">
-        <Avatar hash={tweet.gravatar}/>
+        {/* <Avatar hash={tweet.gravatar}/>
         <div className="content">
             <Author author={tweet.author}/>
             <Time time={tweet.timestamp} />
@@ -18,9 +19,39 @@ return(
                 <LikeButton count={tweet.likes}/>
                 <MoreOptionsButton/>
             </div>
-        </div>
+        </div> */}
+        <ErrorBox>
+            Something has gone wrong.
+        </ErrorBox>
+        <FirstChildOnly>
+            <p>Some thing gone right</p>
+            <p>Some thing gone sright</p>
+            <p>Some thing gone tright</p>
+        </FirstChildOnly>
+
     </div>
 );
+}
+
+function ErrorBox({children}){
+    return (
+        <div>
+            <i className="fa fa-exclamation triangle"/>
+            {children}
+        </div>
+    );
+}
+
+function FirstChildOnly({children}){
+    
+ let items = React.Children.toArray(children);
+ const first = items[items.length-1];
+ return(
+    <span>{first}</span>
+ );
+}
+FirstChildOnly.propTypes = {
+    children:PropTypes.node
 }
 function Avatar({hash}) {
     const url=`https://www.gravatar.com/avatar/${hash}`;
@@ -108,4 +139,4 @@ const testTweet = {
 };
 
 
-ReactDOM.render(<Tweet tweet={testTweet}/>, document.querySelector("#root"));
+ReactDOM.render(<Tweet/>, document.querySelector("#root"));
